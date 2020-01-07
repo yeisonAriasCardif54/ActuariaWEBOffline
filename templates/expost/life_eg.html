@@ -1,0 +1,197 @@
+{% load static %}
+<script src="{% static 'assets/app/js/life_eg.js' %}" type="text/javascript"></script>
+
+<!-- Resources -->
+<!-- SERVER
+<script src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script src="https://www.amcharts.com/lib/3/serial.js"></script>
+<script src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
+<script src="https://www.amcharts.com/lib/3/xy.js"></script>
+<link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all"/>
+-->
+
+<script src="{% static 'assets/app/js/amcharts/amcharts.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/app/js/amcharts/serial.js' %}" type="text/javascript"></script>
+<script src="{% static 'assets/app/js/amcharts/min.js' %}" type="text/javascript"></script>
+<link rel="stylesheet" href="{% static 'assets/app/js/amcharts/export.css' %}" type="text/css" media="all"/>
+<script src="{% static 'assets/app/js/amcharts/xy.js' %}" type="text/javascript"></script>
+
+<!-- Styles -->
+<style>
+    #chartdiv {
+        width: 100%;
+        height: 500px;
+    }
+</style>
+
+<form class="m-form m-form--fit m-form--label-align-right m-demo" action="" method="post">
+
+    <div class="form-group m-form__group row m-demo__preview block" style="padding-bottom: 19px;">
+        {% csrf_token %}
+        {{ form }}
+
+        <div class="col-3">
+            <label class="col-12 col-form-label">Socio:</label>
+            <div class="col-12">
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple data-actions-box="true"
+                        title="Seleccione socio(s)" name="socios" id="socios" onchange="reload_data('socios')">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label class="col-12 col-form-label">Canal:</label>
+            <div class="col-12">
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple data-actions-box="true"
+                        title="Seleccione canal(es)" name="canales" id="canales" onchange="reload_data('canales')">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label class="col-12 col-form-label">Producto Financiero:</label>
+            <div class="col-12">
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple data-actions-box="true"
+                        title="Seleccione Prod_Financiero(s)" name="linea_fina" id="linea_fina" onchange="reload_data('linea_fina')">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label class="col-12 col-form-label">Tipo:</label>
+            <div class="col-12">
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple data-actions-box="true"
+                        title="Seleccione Tipo(s)" name="tipos" id="tipos" onchange="reload_data('tipos')">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="col-3">
+            <label class="col-lg-12 col-form-label">Código_Producto:</label>
+            <div class="col-lg-12">
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple data-actions-box="true"
+                        title="Seleccione producto(s)" name="productos" id="productos"
+                        onchange="reload_data('productos')">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="col-3">
+            <label class="col-lg-12 col-form-label">Data_Database:</label>
+            <div class="col-lg-12">
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple data-actions-box="true"
+                        title="Seleccione database" name="database" id="database"
+                        onchange="reload_data('database')">
+                    <option value="ALL">ALL</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="col-1">
+            <label class="col-lg-12 col-form-label">Borrar Filtros:</label>
+            <div class="col-lg-12">
+                <input type="button" value="Borrar" onClick="location.href=location.href">
+            </div>
+        </div>
+
+        <br>
+    </div>
+</form>
+
+
+<!-- HTML GRAPH -->
+<div class="row">
+
+    <!-- Graph A -->
+    <div class="col-6">
+        <label class="col-lg-12 col-form-label"><strong><font size="3"> <i> Population Pyramid</i>
+        </font></strong></label>
+        <div id="chartdiv" style="width: 100%; background-color: #FFFFFF;"></div>
+    </div>
+
+    <!-- Table A -->
+    <div class="col-3">
+
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h4 class="kt-portlet__head-title">
+                        Summary
+                    </h4>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <!--begin::Section-->
+                <div class="kt-section">
+
+                    <div class="kt-section__content">
+                        <table class="table table-sm table-head-bg-brand" id="table_">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Range</th>
+                                <th>Male</th>
+                                <th>Female</th>
+                                <th>No-Gender</th>
+                                <th>Total</th>
+                                <th>Percent</th>
+                            </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+                <!--end::Section-->
+            </div>
+        </div>
+    </div>
+
+    <!-- Table B -->
+    <div class="col-3">
+
+        <div class="kt-portlet">
+            <div class="kt-portlet__head">
+                <div class="kt-portlet__head-label">
+                    <h4 class="kt-portlet__head-title">
+                        Summary 2
+                    </h4>
+                </div>
+            </div>
+            <div class="kt-portlet__body">
+                <!--begin::Section-->
+                <div class="kt-section">
+
+                    <div class="kt-section__content">
+                        <table class="table table-sm table-head-bg-brand" id="table_2">
+                            <thead class="thead-dark">
+                            <tr>
+                                <th>Medidas</th>
+                                <th>Male</th>
+                                <th>Female</th>
+                                <th>Total</th>
+                            </tr>
+                            </thead>
+
+                        </table>
+                    </div>
+                </div>
+                <!--end::Section-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<style>
+    .blockUI {
+        z-index: 1001 !important;
+    }
+</style>
+

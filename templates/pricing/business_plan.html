@@ -1,0 +1,78 @@
+{% if perms.pricing.generar_business_plan %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/pricing_wpt_bp.js' %}" type="text/javascript"></script>
+    <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="">
+        <div class="m-portlet__body">
+            {% csrf_token %}
+            {{ form }}
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview m-demo__preview--btn">
+                        <div class="">
+                            <a href="/static/pricing/business_plan_templates/Inputs.xlsx" target="_blank" class="btn m-btn--pill m-btn--air btn-secondary btn-sm m-btn m-btn--custom m-btn--label-warning">
+                                <i class="fa fa-download"></i>
+                                Descargar plantilla
+                            </a>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="form-group m-form__group">
+                                    <label for="exampleInputEmail1">Archivo</label>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="file" name="file" required>
+                                        <label class="custom-file-label" for="customFile">Seleccionar</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-group m-form__group">
+                                    <label for="mas_detalles">
+                                        Imprimir mas detalles
+                                        <i data-original-title="Imprimir en el OutPut las hojas:"
+                                           data-content="BP Anual (PorProducto) <br> BP Mensual (PorProducto) <br> ▲Vigentes <br> ▲Cancelados <br> ▲OutPut_vlrprimac <br> ▲OutPut_vlrprimad <br> ▲gwpnt <br> Data <br> Input"
+                                           data-toggle="m-popover"
+                                           data-html="true"
+                                           data-placement="right"
+                                           title=""
+                                           class="flaticon-info m--font-warning"
+                                           style="cursor: help">
+                                        </i>
+                                    </label>
+                                    <div class="custom-file">
+                                <span class="m-bootstrap-switch m-bootstrap-switch--pill m-bootstrap-switch--air">
+                                    <input data-switch="true" type="checkbox" data-on-color="success" data-on-text="SI" data-off-text="NO" name="mas_detalles" id="mas_detalles">
+                                    <input type="hidden" name="mas_detalles_val" id="mas_detalles_val" value="NO"/>
+                                </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__actions ">
+                        <button type="button" class="btn btn-primary" id="generateBP">Generar Business Plan</button>
+                        <a href="" class="btn btn-outline-warning m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="visibility: hidden !important" id="file_download" target="_blank">
+                        <span>
+                            <i class="la la-cloud-download"></i>
+                            <span>Descargar archivo generado.</span>
+                        </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

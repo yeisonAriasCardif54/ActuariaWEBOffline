@@ -1,0 +1,85 @@
+{% if perms.pricing.generar_business_plan %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/pricing/tan.js' %}" type="text/javascript"></script>
+    <br>
+    <br>
+    <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="">
+        <div class="m-portlet__body">
+            {% csrf_token %}
+            {{ form }}
+            <div class="m-section__content">
+
+                <div class="m-widget5">
+                    <div class="m-widget5__item">
+                        <div class="m-widget5__content">
+                            <div class="m-widget5__pic">
+                                <img class="m-widget7__img" src="{% static 'actuaria/tan.jpg' %}" alt="">
+                            </div>
+                            <div class="m-widget5__section">
+                                <h4 class="m-widget5__title">
+                                    Generar plantilla TAN
+                                </h4>
+                                <span class="m-widget5__desc">
+                                Recuerde cargar un archivo Excel (.xlsx), con su respectiva hoja <b>Tarificador</b>.
+                            </span>
+                                <div class="m-widget5__info">
+                                <span class="m-widget5__author">
+                                    <a href="/static/pricing/business_plan_templates/input_tan.xlsx" target="_blank" class="btn btn-outline-warning btn-sm m-btn  m-btn m-btn--icon m-btn--pill">
+                                        <span>
+                                            <i class="fa fa-download"></i>
+                                            <span>Descargar plantilla</span>
+                                        </span>
+                                    </a>
+                                </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-widget5__content">
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="m-section__content">
+                    <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                        <div class="m-demo__preview m-demo__preview--btn">
+                            <div class="form-group m-form__group">
+                                <label for="exampleInputEmail1">Archivo</label>
+                                <div></div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="file" name="file">
+                                    <label class="custom-file-label" for="customFile">Seleccionar</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="m-form__actions">
+                            <button type="button" class="btn btn-warning" id="getTan">Generar</button>
+                        </div>
+                    </div>
+                </div>
+                {% comment %} <footer class="blockquote-footer">Core developed by
+                <cite title="Andres Grimaldo">Andres Grimaldo</cite>
+            </footer>{% endcomment %}
+            </div>
+        </div>
+    </form>
+    <style>
+        .table td, .table th {
+            padding: 4px !important;
+        }
+    </style>
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

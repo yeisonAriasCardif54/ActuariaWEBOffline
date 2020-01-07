@@ -1,0 +1,208 @@
+{% if agent != 'IE' %}
+    {% if perms.profitability.generar_presupuesto %}
+        {% load static %}
+        <script src="{% static 'assets/app/js/presupuesto.js' %}" type="text/javascript"></script>
+        <script src="{% static 'assets/app/js/presupuesto_resumen.js' %}" type="text/javascript"></script>
+        <script src="{% static 'assets/app/js/presupuesto_favoritos.js' %}" type="text/javascript"></script>
+        <br>
+        <br>
+        <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="" id="form_presupuesto">
+            <ul class="nav nav-tabs" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active show" data-toggle="tab" href="#m_tabs_3_1" style="">
+                        <i class="la la-file-text"></i>Generar presupuesto
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#m_tabs_3_2" style="">
+                        <i class="la la-file-excel-o"></i>Plantillas
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#m_tabs_3_3">
+                        <i class="la la-history"></i>Historial
+                    </a>
+                </li>
+                <!--<li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#m_tabs_3_4">
+                        <i class="la la-file-pdf-o"></i>Documentación
+                    </a>
+                </li>-->
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane active" id="m_tabs_3_1">
+                    <div class="m-portlet__body">
+                        {% csrf_token %}
+                        {{ form }}
+                        <div class="alert alert-info alert-dismissible fade show   m-alert m-alert--air m-alert--outline m-alert--outline-2x" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            </button>
+                            <strong>Importante!</strong> Por favor seleccione el archivo en formato Excel (.xlsx) para generar el presupuesto.
+                        </div>
+                        <div class="m-section__content">
+                            <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                                <div class="m-demo__preview m-demo__preview--btn">
+                                    <div class="form-group m-form__group">
+                                        <label for="file">Archivo</label>
+                                        <div></div>
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="file" name="file">
+                                            <label class="custom-file-label" for="file">Seleccionar</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="m-form__actions">
+                                    <button type="button" class="btn btn-primary" id="generate" data-favorite="false">Generar presupuesto</button>
+                                    {% if perms.profitability.admin_grupo_presupuesto %}
+                                        <br>
+                                        <button type="button" class="btn btn-metal" id="generateFavoritos" data-favorite="true">Generar presupuesto a partir de favoritos de mi grupo</button>
+                                        <button type="button" class="btn btn-metal" id="generateHistorico">Ver Favoritos del grupo</button>
+                                    {% endif %}
+
+                                    <!--<a href="" class="btn btn-outline-warning m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="visibility:  !important"  target="_blank">
+                                        <span>
+                                            <i class="la la-cloud-download"></i>
+                                            <span>&nbsp;&nbsp;Descargar OutPut&nbsp;&nbsp;</span>
+                                        </span>
+                                    </a>-->
+
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-outline-warning dropdown-toggle m-btn--pill" data-toggle="dropdown" aria-haspopup="true" id="file_download" aria-expanded="false" style="visibility: hidden !important">
+                                        <span>
+                                            <i class="la la-cloud-download"></i>
+                                            <span>&nbsp;&nbsp;Descargar OutPut&nbsp;&nbsp;</span>
+                                        </span>
+                                        </button>
+                                        <div class="dropdown-menu">
+                                            <a class="dropdown-item" href="#" id="file_download_v1" target="_blank">Descargar en formato CSV - <strong>delimitado por comas (,)</strong></a>
+                                            <a class="dropdown-item" href="#" id="file_download_v2" target="_blank">Descargar en formato CSV - <strong>delimitado por punto y coma (;)</strong></a>
+                                            <a class="dropdown-item" href="#" id="file_download_v3" target="_blank">Descargar en formato Excel (.xslx) - <strong>Tarda entre 5 y 20 segundos</strong></a>
+                                        </div>
+                                    </div>
+
+                                    {% comment %}<input type="hidden" id="file_summary" name="file_summary" value="OutPut_2019_01_17_16_32_55.csv">{% endcomment %}
+                                    <button type="button" class="btn btn-outline-dark m-btn m-btn--icon m-btn--outline-2x m-btn--pill view_summary" style="visibility: hidden !important" id="view_summary">
+                                <span>
+                                    <i class="fa fa-chart-line"></i>
+                                    <span>&nbsp;&nbsp;Ver Resumen&nbsp;&nbsp;</span>
+                                </span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        {% comment %}<div class="m-section__content m-demo" id="summary"></div>{% endcomment %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="m_tabs_3_2">
+                    <div class="m-demo__preview m-demo__preview--btn">
+                        {% for plantilla in plantillas %}
+                            <a href="media/{{ plantilla.archivo }}" class="btn btn-info m-btn m-btn--custom m-btn--icon m-btn--pill m-btn--air" target="_blank">
+                    <span>
+                        <i class="fa flaticon-download"></i>
+                        <span>Descargar {{ plantilla.nombre }}</span>
+                    </span>
+                            </a>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="tab-pane" id="m_tabs_3_3">
+                    <table id="log" class="table" style="width:100%">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>FECHA</th>
+                            <th>ARCHIVO CARGADO</th>
+                            <th>ARCHIVO GENERADO</th>
+                            <th>OPCIONES</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+                <div class="tab-pane" id="m_tabs_3_4">
+                    <div>Documentación</div>
+                </div>
+            </div>
+        </form>
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-vivaldi-spatnav-clickable="1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Listado de presupuestos "Favoritos"</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="">
+                            <table id="logFavoritosGrupo" class="table" style="width:100%">
+                                <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>USUARIO</th>
+                                    <th>FECHA</th>
+                                    <th>ARCHIVO CARGADO</th>
+                                    <th>ARCHIVO GENERADO</th>
+                                </tr>
+                                </thead>
+                            </table>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="myModalSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-vivaldi-spatnav-clickable="1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" id="">
+                    <form id="form_presupuestoSummary">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabelSummary">Resumen</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">×</span>
+                            </button>
+                        </div>
+                        <div class="modal-body modal-summary">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+            <div class="m-alert__icon">
+                <i class="flaticon-exclamation-1"></i>
+                <span></span>
+            </div>
+            <div class="m-alert__text">
+                <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+            </div>
+            <div class="m-alert__close">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                </button>
+            </div>
+        </div>
+    {% endif %}
+
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> Por favor utilizar el navegador mozilla firefox,  si no logra acceder al aplicativo puede descargar
+            <a href="https://vivaldi.com/es/" target="_blank">aquí</a>
+            un navegador alternativo llamado Vivaldi.
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

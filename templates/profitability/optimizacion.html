@@ -1,0 +1,96 @@
+{% if perms.profitability.calcular_desembolsos_st_y_rrc %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/optimizacion.js' %}" type="text/javascript"></script>
+
+    <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="">
+        <div class="m-portlet__body">
+            {% csrf_token %}
+            {{ form }}
+            <div class="m-section__content">
+                <div class="m-demo" data-code-preview="true" data-code-html="true" data-code-js="false">
+                    <div class="m-demo__preview m-demo__preview--btn">
+                        <div class="form-group m-form__group">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <label for="fo">Selección de F.O.</label>
+                                    <select class="form-control m-input form-control-sm" name="fo" id="fo">
+                                        <option value="NBI">NBI</option>
+                                        <option value="NBI(GWP)">NBI(GWP)</option>
+                                        <option value="GWP(NBI)">GWP(NBI)</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="anio_optimizacion">Año de Optimización</label>
+                                    <select class="form-control m-input form-control-sm" name="anio_optimizacion" id="anio_optimizacion">
+                                        <option value="2">2</option>
+                                        <option value="1">1</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label for="anio_penetracion">Penetración del Año</label>
+                                    <select class="form-control m-input form-control-sm" name="anio_penetracion" id="anio_penetracion">
+                                        <option value="1 y 2">1 y 2</option>
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                    </select>
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="anio_penetracion">Valor de GWP Objetivo:</label>
+                                    <input type="number" class="form-control m-input form-control-sm" id="valor_objetivo" placeholder="0">
+                                </div>
+                                <div class="col-lg-3">
+                                    <label for="exampleSelect1">Variar Penetración</label>
+                                    <div class="1">
+                                        <div class="row align-items-center">
+                                            <input type="hidden" class="form-control" id="m_nouislider_3_input">
+                                            <input type="hidden" class="form-control" id="m_nouislider_3.1_input">
+                                            <div class="col-12">
+                                                <div id="m_nouislider_3" class="m-nouislider"></div>
+                                            </div>
+                                        </div>
+                                        <span class="m-form__help">Por favor seleccione los meses <b>desde</b> y <b>hasta</b> donde se desea cambiar la penetración.</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group m-form__group">
+                            <label for="exampleInputEmail1">Archivo</label>
+                            <div></div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="file" name="file" required>
+                                <label class="custom-file-label" for="customFile">Seleccionar</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="m-form__actions">
+                        <button type="button" class="btn btn-primary" id="generateOPT">Optimizar</button>
+                        <a href="" class="btn btn-outline-warning m-btn m-btn--icon m-btn--outline-2x m-btn--pill" style="visibility: hidden !important" id="file_download" target="_blank">
+                            <span>
+                                <i class="la la-cloud-download"></i>
+                                <span>Descargar archivo generado.</span>
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
+{% else %}
+
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+
+{% endif %}

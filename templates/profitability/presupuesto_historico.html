@@ -1,0 +1,57 @@
+{% if perms.profitability.historico_presupuesto %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/presupuesto_historico.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/app/js/presupuesto.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/app/js/presupuesto_resumen.js' %}" type="text/javascript"></script>
+    <br>
+    <br>
+    <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="">
+        {% csrf_token %}
+        <table id="logHistory" class="table" style="width:100%">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>USUARIO</th>
+                <th>FECHA</th>
+                <th>ARCHIVO CARGADO</th>
+                <th>ARCHIVO GENERADO</th>
+                <th>OPCIONES</th>
+            </tr>
+            </thead>
+        </table>
+    </form>
+    <div class="modal fade" id="myModalSummary" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" data-vivaldi-spatnav-clickable="1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content" id="">
+                <form id="form_presupuestoSummary">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabelSummary">Resumen</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">×</span>
+                        </button>
+                    </div>
+                    <div class="modal-body modal-summary">
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

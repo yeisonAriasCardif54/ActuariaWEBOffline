@@ -1,0 +1,19 @@
+{% load static %}
+<form class="m-form m-form--fit m-form--label-align-right" action="/tarificador/tagsSave" method="post">
+    {% csrf_token %}
+    <div class="m-portlet__body">
+        <div class="form-group m-form__group">
+            <label for="nombre">Nombre de la etiqueta</label>
+            <input type="text" class="form-control m-input m-input--air m-input--pill" id="nombre" name="nombre" placeholder="Nombre" required>
+        </div>
+        <div class="form-group m-form__group">
+            <label for="color">Color</label>
+            <input type="color" class="" id="color" name="color" placeholder="color" required value="#888888">
+        </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions">
+            <button type="submit" class="btn btn-brand">Guardar</button>
+        </div>
+    </div>
+</form>

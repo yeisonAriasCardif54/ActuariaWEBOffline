@@ -1,0 +1,147 @@
+{% if perms.profitability.ver_reporte_pgv %}
+{% load static %}
+    <script src="{% static 'assets/app/js/amcharts/ammap.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/app/js/amcharts/colombiaHigh.js' %}" type="text/javascript"></script>
+
+    <script src="{% static 'assets/app/js/amcharts/min.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'assets/app/js/amcharts/export.css' %}" type="text/css" media="all"/>
+
+    <script>
+            var images = {{ images|safe }}
+            var areas = {{ areas|safe }}
+                var map = AmCharts.makeChart("map",{
+                        "type": "map",
+                        "pathToImages": "http://www.amcharts.com/lib/3/images/",
+                        "addClassNames": true,
+                        "fontSize": 15,
+                        "color": "#000000",
+                        "projection": "eckert5",
+                        "backgroundAlpha": 1,
+                        "backgroundColor": "rgba(255,255,255,1)",
+                        "dataProvider": {
+                            "map": "colombiaHigh",
+                            "areas": areas,
+                            "getAreasFromMap": true,
+                            "images": images,
+
+                        },
+                        "balloon": {
+                            "horizontalPadding": 15,
+                            "borderAlpha": 0,
+                            "borderThickness": 1,
+                            "verticalPadding": 15
+                        },
+                        "areasSettings": {
+                            "color": "rgba(82,153,173,1)",
+                            "outlineColor": "rgba(255,255,255,1)",
+                            "rollOverOutlineColor": "rgba(255,255,255,1)",
+                            "rollOverBrightness": 20,
+                            "selectedBrightness": 20,
+                            "selectable": true,
+                            "unlistedAreasAlpha": 0,
+                            "unlistedAreasOutlineAlpha": 0
+                        },
+                        "imagesSettings": {
+                            "alpha": 1,
+                            "color": "rgba(82,153,173,1)",
+                            "outlineAlpha": 0,
+                            "rollOverOutlineAlpha": 0,
+                            "outlineColor": "rgba(255,255,255,1)",
+                            "rollOverBrightness": 20,
+                            "selectedBrightness": 20,
+                            "selectable": true
+                        },
+                        "linesSettings": {
+                            "color": "rgba(82,153,173,1)",
+                            "selectable": true,
+                            "rollOverBrightness": 20,
+                            "selectedBrightness": 20
+                        },
+                         "legend": {
+                            "width": 440,
+                            "marginRight": 27,
+                            "marginLeft": 27,
+                            "equalWidths": true,
+                            "maxColumns": 1,
+                            "backgroundAlpha": 0.1,
+                            "backgroundColor": "#d0cfcf",
+                            "borderColor": "#d0cfcf",
+                            "borderAlpha": 0.7,
+                            "right": 0,
+                            "horizontalGap": 10,
+                            "switchable": true,
+                            "data": [
+                            {
+                              "title": "No. de Siniestros pagados: {{ numero_siniestros }}",
+                              "customMarker": "https://cdn3.iconfinder.com/data/icons/user-interface-127/50/User_Interface_Outline-06-512.png"
+                            },{
+                              "title": "No. de Departamentos: 32",
+                              "customMarker": "https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Location-512.png"
+                            },{
+                              "title": "No. de Municipios: 887",
+                              "customMarker": "https://cdn3.iconfinder.com/data/icons/pictofoundry-pro-vector-set/512/Location-512.png"
+                            },{
+                              "title": "Valor de  Siniestros pagados: {{ total_siniestros }}",
+                              "customMarker": "https://cdn3.iconfinder.com/data/icons/shopping-icons-for-shopify/24/Cash-512.png"
+                            }
+                            ]
+                          },
+                          "export":
+                                {
+                                    "enabled":true
+                                }
+                    });
+
+
+    // define an event to catch all click events on th emap
+
+
+    /*
+    map.addListener("click", function(event) {
+      // find out the coordinates of under mouse cursor
+      var info = event.chart.getDevInfo();
+
+      // print out dev info
+      var log = document.getElementById('maplog');
+      log.innerHTML = JSON.stringify({
+        "latitude": info.latitude,
+        "longitude": info.longitude
+      }) + "<br />" + log.innerHTML;
+
+      // print in console as well
+      console.log({
+        "latitude": info.latitude,
+        "longitude": info.longitude
+      })
+
+      // add a marker on a click location
+      var image = new AmCharts.MapImage();
+      image.latitude = info.latitude;
+      image.longitude = info.longitude;
+      image.type = "circle";
+      image.alpha = 0.5;
+      map.dataProvider.images.push(image);
+      map.validateData();
+    });
+    */
+
+    </script>
+
+    <div id="map" style="width: 100%; height: 949px;"></div>
+    <div id="maplog"></div>
+
+{% else %}
+<div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+    <div class="m-alert__icon">
+        <i class="flaticon-exclamation-1"></i>
+        <span></span>
+    </div>
+    <div class="m-alert__text">
+        <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+    </div>
+    <div class="m-alert__close">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        </button>
+    </div>
+</div>
+{% endif %}

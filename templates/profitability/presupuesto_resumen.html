@@ -1,0 +1,593 @@
+<!-- Resources -->
+<div class="text-right">
+    <a href="/static/profitability/update_presupuesto/{{ filename }}" target="_blank" class="m-badge m-badge--success m-badge--wide font-weight-light">
+        <i class="fa fa-download"></i>
+        {{ filename }}
+    </a>
+</div>
+<div class="m-demo__preview m-demo__preview--btn" style="padding: 15px !important;">
+    <ul class="nav nav-pills" role="tablist">
+        <li class="nav-item ">
+            <a class="nav-link {% if id_tab_content == 'm_tabs_3_1_1' %} active show {% endif %}" data-toggle="tab" href="#m_tabs_3_1_1" style="">
+                <i class="flaticon-interface-9"></i>
+                Resumen
+            </a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link {% if id_tab_content == 'm_tabs_3_2_2' or id_tab_content == 'undefined'  %} active show {% endif %}" data-toggle="tab" href="#m_tabs_3_2_2" style="">
+                <i class="flaticon-graph"></i>
+                DashBoard
+            </a>
+        </li>
+    </ul>
+    <div class="row">
+        <div class="col-12">
+            <div class="m-form__group form-group">
+                <label>Analizar por</label>
+                <div class="m-radio-inline">
+                    <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="0" {% if analizarPor == '0' %} checked="checked" {% endif %} > Socio
+                        <span></span>
+                    </label>
+                    <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="1" {% if analizarPor == '1' %} checked="checked" {% endif %}> Linea Negocio Socio
+                        <span></span>
+                    </label>
+                    <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="2" {% if analizarPor == '2' %} checked="checked" {% endif %}> Tipo Oferta
+                        <span></span>
+                    </label>
+                    <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="3" {% if analizarPor == '3' %} checked="checked" {% endif %}> Producto
+                        <span></span>
+                    </label>
+                    <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="4" {% if analizarPor == '4' %} checked="checked" {% endif %}> Tipo de seguro
+                        <span></span>
+                    </label>
+                    <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="5" {% if analizarPor == '5' %} checked="checked" {% endif %}> Tipo de proyección
+                        <span></span>
+                    </label>
+                     <label class="m-radio">
+                        <input type="radio" name="analizarPor" value="6" {% if analizarPor == '6' %} checked="checked" {% endif %}> Segmento
+                        <span></span>
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" style="padding-top: 10px !important;">
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label>Filtrar por</label>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group m-form__group">
+                <label for="filtro0">Socio:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro0" name="filtro0" data-live-search="true">
+                    {% for socio in socios %}
+                        <option value="{{ socio }}" {% if socio in filtro0 %} selected {% endif %}>{{ socio }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group m-form__group">
+                <label for="filtro1">Linea Negocio:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro1" name="filtro1" data-live-search="true">
+                    {% for linea in lineas %}
+                        <option value="{{ linea }}" {% if linea in filtro1 %} selected {% endif %}>{{ linea }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group m-form__group">
+                <label for="filtro2">Tipo Oferta:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro2" name="filtro2" data-live-search="true">
+                    {% for tipo_oferta in tipos_oferta %}
+                        <option value="{{ tipo_oferta }}" {% if tipo_oferta in filtro2 %} selected {% endif %}>{{ tipo_oferta }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group m-form__group">
+                <label for="filtro3">Producto:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro3" name="filtro3" data-live-search="true">
+                    {% for producto in productos %}
+                        <option value="{{ producto }}" {% if producto in filtro3 %} selected {% endif %}>{{ producto }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group m-form__group">
+                <label for="filtro4">Tipo de seguro:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro4" name="filtro4" data-live-search="true">
+                    {% for capa in capas %}
+                        <option value="{{ capa }}" {% if capa in filtro4 %} selected {% endif %}>{{ capa }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-2">
+            <div class="form-group m-form__group">
+                <label for="filtro5">Tipo de proyección:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro5" name="filtro5" data-live-search="true">
+                    {% for tipo_proyeccion in tipos_proyeccion %}
+                        <option value="{{ tipo_proyeccion }}" {% if tipo_proyeccion in filtro5 %} selected {% endif %}>{{ tipo_proyeccion }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+        <div class="col-1">
+            <div class="form-group m-form__group">
+                <label for="filtro6">Segmento:</label>
+                <select class="form-control m-bootstrap-select m_selectpicker" multiple id="filtro6" name="filtro6" data-live-search="true">
+                    {% for segmento in segmentos %}
+                        <option value="{{ segmento }}" {% if segmento in filtro6 %} selected {% endif %}>{{ segmento }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 10px !important;">
+        <div class="col-12">
+            <div class="form-group m-form__group">
+                <label>Seleccione los valores:</label>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="m-form__group form-group row">
+                <div class="col-12">
+                    <div class="m-checkbox-inline">
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="Nuevos" {% if 'Nuevos' in valores %} checked="checked" {% endif %}> Nuevos
+                            <span></span>
+                        </label>
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="Vigentes" {% if 'Vigentes' in valores %} checked="checked" {% endif %}> Vigentes
+                            <span></span>
+                        </label>
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="Cancelaciones" {% if 'Cancelaciones' in valores %} checked="checked" {% endif %}> Cancelaciones
+                            <span></span>
+                        </label>
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="Siniestros" {% if 'Siniestros' in valores %} checked="checked" {% endif %}> Siniestros
+                            <span></span>
+                        </label>
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="GWP neto" {% if 'GWP neto' in valores %} checked="checked" {% endif %}> GWP neto
+                            <span></span>
+                        </label>
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="GWP Cancelaciones" {% if 'GWP Cancelaciones' in valores %} checked="checked" {% endif %}> GWP Cancelaciones
+                            <span></span>
+                        </label>
+                        <label class="m-checkbox">
+                            <input type="checkbox" name="valores" value="Total Commissions" {% if 'Total Commissions' in valores %} checked="checked" {% endif %}> Total Commissions
+                            <span></span>
+                        </label>
+                    </div>
+                    <span class="m-form__help m--font-danger">Seleccione 2 opciones.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" style="padding-top: 10px !important;">
+        <div class="col-3">
+            <div class="form-group m-form__group">
+                <button type="button" class="btn btn-outline-success m-btn m-btn--icon m-btn--outline-2x m-btn--pill view_summary btn-sm" data-file="{{ filename }}">
+                    <span>
+                        <i class="la la-filter"></i>
+                        <span>&nbsp;&nbsp;Filtrar&nbsp;&nbsp;</span>
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="tab-content" id="tab-content">
+        <div class="tab-pane {% if id_tab_content == 'm_tabs_3_1_1' %} active {% endif %}" id="m_tabs_3_1_1" role="tabpanel">
+            <div class="row table-responsive" style="padding-top: 10px !important;">
+                {{ table|safe }}
+            </div>
+        </div>
+        <div class="tab-pane {% if id_tab_content == 'm_tabs_3_2_2' or id_tab_content == 'undefined' %} active {% endif %}" id="m_tabs_3_2_2" role="tabpanel">
+            <script>
+                function getColumn(anArray, columnNumber) {
+                    return anArray.map(function (row) {
+                        return '<br>' + row[columnNumber];
+                    });
+                }
+            </script>
+            <div class="row">
+                <script>
+                    dataChart = {{ dataChart|safe }};
+
+                    dataChart_total = {{ dataChart_total|safe }};
+                    maxRegistros = 100;
+                    valor1 = '{{ valor1|safe }}';
+                    valor2 = '{{ valor2|safe }}';
+                </script>
+                {% for año in años %}
+                    <!-- Chart code -->
+                    <script>
+                        tamanioRegistros = dataChart[{{ año }}].length;
+                        if (tamanioRegistros <= maxRegistros) {
+                            $(document).ready(function () {
+
+                                /*
+                                /////////////////////////////////////////////////////////////////////////////////////////////
+                                ////////////////////////////////////// GRÁFICA VERSION 1 //////////////////////////////////////
+                                //////////////////////////////////////////////////////////////////////////////////////////////
+                                // Themes begin
+                                am4core.useTheme(am4themes_frozen);
+                                am4core.useTheme(am4themes_animated);
+                                // Themes end
+
+                                // Create series
+                                function createSeries(field, name, chart) {
+                                    var series = chart.series.push(new am4charts.ColumnSeries());
+                                    series.dataFields.valueX = field;
+                                    series.dataFields.categoryY = "category";
+                                    series.name = name;
+                                    series.columns.template.tooltipText = "{name}: [bold]{valueX} M[/] ";
+                                    series.columns.template.height = am4core.percent(100);
+                                    series.sequencedInterpolation = true;
+
+                                    var valueLabel = series.bullets.push(new am4charts.LabelBullet());
+                                    valueLabel.label.text = "{valueX} M";
+                                    valueLabel.label.horizontalCenter = "left";
+                                    valueLabel.label.dx = 10;
+                                    valueLabel.label.hideOversized = false;
+                                    valueLabel.label.truncate = false;
+
+                                    var categoryLabel = series.bullets.push(new am4charts.LabelBullet());
+                                    categoryLabel.label.text = "{name}";
+                                    categoryLabel.label.horizontalCenter = "right";
+                                    categoryLabel.label.dx = -10;
+                                    categoryLabel.label.fill = am4core.color("#fff");
+                                    categoryLabel.label.hideOversized = false;
+                                    categoryLabel.label.truncate = false;
+                                }
+
+                                //GRÁFICA CON TODOS LOS REGISTROS//
+                                // Create chart instance
+                                var chart = am4core.create("chartdiv_
+
+
+
+
+
+
+
+
+
+                                {{ año }}", am4charts.XYChart);
+                                // Add data
+                                chart.data = dataChart[
+
+
+
+
+
+
+
+
+
+                                {{ año }}];
+                                // Add title
+                                var title = chart.titles.create();
+                                title.text =
+
+
+
+
+
+
+
+
+
+                                {{ año }};
+                                title.fontSize = 20;
+                                title.marginBottom = 5;
+                                // Create categoryAxis
+                                var categoryAxis = chart.yAxes.push(new am4charts.CategoryAxis());
+                                categoryAxis.dataFields.category = "category";
+                                categoryAxis.numberFormatter.numberFormat = "#,###.#";
+                                categoryAxis.renderer.inversed = true;
+                                categoryAxis.renderer.grid.template.location = 0;
+                                categoryAxis.renderer.cellStartLocation = 0.1;
+                                categoryAxis.renderer.cellEndLocation = 0.9;
+                                // Create valueAxis
+                                var valueAxis = chart.xAxes.push(new am4charts.ValueAxis());
+                                valueAxis.renderer.opposite = true;
+                                // Create createSeries
+                                createSeries('valor1', valor1, chart);
+                                createSeries('valor2', valor2, chart);
+                                // Add ExportMenu
+                                chart.exporting.menu = new am4core.ExportMenu();
+                                // Calculate tamanioChartDiv
+                                var tamanioChartDiv = 600;
+                                if (tamanioRegistros > 10) {
+                                    var tamanioChartDiv = tamanioRegistros * 60
+                                }
+                                $(".chartdiv_
+
+
+
+
+
+
+
+
+
+                                {{ año }}").css('height', tamanioChartDiv + 'px');
+
+
+                                //GRÁFICA CON TOTAL//
+                                // Create chart instance
+                                var chart2 = am4core.create("chartdiv_total_
+
+
+
+
+
+
+
+
+
+                                {{ año }}", am4charts.XYChart);
+                                // Add data
+                                chart2.data = dataChart_total[
+
+
+
+
+
+
+
+
+
+                                {{ año }}];
+                                // Add title
+                                var title2 = chart2.titles.create();
+                                title2.text = 'Total ' +
+
+
+
+
+
+
+
+
+
+                                {{ año }};
+                                title2.fontSize = 20;
+                                title2.marginBottom = 5;
+                                // Create categoryAxis
+                                var categoryAxis2 = chart2.yAxes.push(new am4charts.CategoryAxis());
+                                categoryAxis2.dataFields.category = "category";
+                                categoryAxis2.numberFormatter.numberFormat = "#,###.#";
+                                categoryAxis2.renderer.inversed = true;
+                                categoryAxis2.renderer.grid.template.location = 0;
+                                categoryAxis2.renderer.cellStartLocation = 0.1;
+                                categoryAxis2.renderer.cellEndLocation = 0.9;
+                                // Create valueAxis
+                                var valueAxis2 = chart2.xAxes.push(new am4charts.ValueAxis());
+                                valueAxis2.renderer.opposite = true;
+                                // Create createSeries
+                                createSeries('valor1', valor1, chart2);
+                                createSeries('valor2', valor2, chart2);
+                                // Add ExportMenu
+                                chart2.exporting.menu = new am4core.ExportMenu();
+                                */
+
+
+                                /////////////////////////////////////////////////////////////////////////////////////////////
+                                ////////////////////////////////////// GRÁFICA VERSION 2 ////////////////////////////////////
+                                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                                // Themes begin
+                                am4core.useTheme(am4themes_frozen);
+                                am4core.useTheme(am4themes_animated);
+                                // Themes end
+
+                                // Create chart instance
+                                var chart = am4core.create("chartdiv_{{ año }}", am4charts.XYChart);
+
+                                // Add percent sign to all numbers
+                                chart.numberFormatter.numberFormat = "#,###.# M";
+
+                                // Add data
+                                chart.data = dataChart[{{ año }}];
+
+                                // Add title
+                                var title = chart.titles.create();
+                                title.text = {{ año }};
+                                title.fontSize = 20;
+                                title.marginBottom = 5;
+
+                                // Create axes
+                                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                                categoryAxis.dataFields.category = "category";
+                                categoryAxis.renderer.grid.template.disabled = true;
+                                categoryAxis.renderer.grid.template.location = 0;
+                                categoryAxis.renderer.minGridDistance = 10;
+                                categoryAxis.renderer.labels.template.horizontalCenter = "right";
+                                categoryAxis.renderer.labels.template.verticalCenter = "middle";
+                                categoryAxis.renderer.labels.template.rotation = 270;
+                                categoryAxis.tooltip.disabled = true;
+                                categoryAxis.renderer.minHeight = 30;
+
+                                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                                //valueAxis.title.text = "GDP growth rate";
+                                //valueAxis.title.fontWeight = 800;
+                                valueAxis.renderer.grid.template.strokeDasharray = "4,4";
+                                valueAxis.renderer.labels.template.disabled = false;
+                                valueAxis.min = 0;
+
+                                // Do not crop bullets
+                                chart.maskBullets = false;
+
+                                // Remove padding
+                                chart.paddingBottom = 0;
+
+                                // Create series
+                                var series = chart.series.push(new am4charts.ColumnSeries());
+                                series.dataFields.valueY = "valor1";
+                                series.dataFields.categoryX = "category";
+                                series.clustered = false;
+                                series.tooltipText = "{{ valor1 }} en {categoryX}: [bold]{valueY}[/]";
+
+                                var series2 = chart.series.push(new am4charts.ColumnSeries());
+                                series2.dataFields.valueY = "valor2";
+                                series2.dataFields.categoryX = "category";
+                                series2.clustered = false;
+                                series2.columns.template.width = am4core.percent(50);
+                                series2.tooltipText = "{{ valor2 }} en {categoryX}: [bold]{valueY}[/]";
+
+                                chart.cursor = new am4charts.XYCursor();
+                                chart.cursor.lineX.disabled = true;
+                                chart.cursor.lineY.disabled = true;
+
+                                // Add ExportMenu
+                                chart.exporting.menu = new am4core.ExportMenu();
+
+                                // Calculate tamanioChartDiv
+                                var tamanioChartDiv = 600;
+                                /*if (tamanioRegistros > 10) {
+                                    var tamanioChartDiv = tamanioRegistros * 60
+                                }*/
+                                $(".chartdiv_{{ año }}").css('height', tamanioChartDiv + 'px');
+
+
+                                /////////////////////////////////////////////////////////////////////////////////////////////
+                                ////////////////////////////////////// GRÁFICA VERSION 2 - GRAN TOTAL ////////////////////////////////////
+                                /////////////////////////////////////////////////////////////////////////////////////////////
+
+                                // Themes begin
+                                am4core.useTheme(am4themes_frozen);
+                                am4core.useTheme(am4themes_animated);
+                                // Themes end
+
+                                // Create chart instance
+                                var chart = am4core.create("chartdiv_total_{{ año }}", am4charts.XYChart);
+
+                                // Add percent sign to all numbers
+                                chart.numberFormatter.numberFormat = "#,###.# M";
+
+                                // Add data
+                                chart.data = dataChart_total[{{ año }}];
+
+                                // Add title
+                                var title = chart.titles.create();
+                                title.text = {{ año }};
+                                title.fontSize = 20;
+                                title.marginBottom = 5;
+
+                                // Create axes
+                                var categoryAxis = chart.xAxes.push(new am4charts.CategoryAxis());
+                                categoryAxis.dataFields.category = "category";
+                                categoryAxis.renderer.grid.template.disabled = true;
+                                categoryAxis.renderer.grid.template.location = 0;
+                                categoryAxis.renderer.minGridDistance = 10;
+                                categoryAxis.renderer.labels.template.horizontalCenter = "right";
+                                categoryAxis.renderer.labels.template.verticalCenter = "middle";
+                                //categoryAxis.renderer.labels.template.rotation = 270;
+                                categoryAxis.tooltip.disabled = true;
+                                categoryAxis.renderer.minHeight = 30;
+
+                                var valueAxis = chart.yAxes.push(new am4charts.ValueAxis());
+                                //valueAxis.title.text = "GDP growth rate";
+                                //valueAxis.title.fontWeight = 800;
+                                valueAxis.renderer.grid.template.strokeDasharray = "4,4";
+                                valueAxis.renderer.labels.template.disabled = true;
+                                valueAxis.min = 0;
+
+                                // Do not crop bullets
+                                chart.maskBullets = false;
+
+                                // Remove padding
+                                chart.paddingBottom = 0;
+
+                                // Create series
+                                var series = chart.series.push(new am4charts.ColumnSeries());
+                                series.dataFields.valueY = "valor1";
+                                series.dataFields.categoryX = "category";
+                                series.clustered = false;
+                                series.tooltipText = "{{ valor1 }} en {categoryX}: [bold]{valueY}[/]";
+
+                                var series2 = chart.series.push(new am4charts.ColumnSeries());
+                                series2.dataFields.valueY = "valor2";
+                                series2.dataFields.categoryX = "category";
+                                series2.clustered = false;
+                                series2.columns.template.width = am4core.percent(50);
+                                series2.tooltipText = "{{ valor2 }} en {categoryX}: [bold]{valueY}[/]";
+
+                                chart.cursor = new am4charts.XYCursor();
+                                chart.cursor.lineX.disabled = true;
+                                chart.cursor.lineY.disabled = true;
+
+                                // Add ExportMenu
+                                //chart.exporting.menu = new am4core.ExportMenu();
+
+                                // Calculate tamanioChartDiv
+                                var tamanioChartDiv = 300;
+                                /*if (tamanioRegistros > 10) {
+                                    var tamanioChartDiv = tamanioRegistros * 60
+                                }*/
+                                $(".chartdiv_total_{{ año }}").css('height', tamanioChartDiv + 'px');
+                            });
+                        } else {
+                            registros = getColumn(dataChart[{{ año }}], 'category');
+                            var mensaje = '<br><span class="m-badge m-badge--danger m-badge--wide">' +
+                                'No es posible graficar ' + tamanioRegistros + ' registros<br>Por favor aplique filtros para reducirlos a máximo ' + maxRegistros + ' registros.' +
+                                '</span><br>' +
+                                '[' + registros + ']';
+                            $("#chartdiv_{{ año }}").html(mensaje);
+                            $(".chartdiv_{{ año }}").css('height', '100%');
+                        }
+                    </script>
+                    <!-- HTML -->
+                    <div class="col-10 col-lg-10">
+                        <div id="chartdiv_{{ año }}" class="chartdiv_{{ año }}"></div>
+                    </div>
+                    <div class="col-2 col-lg-2">
+                        <div id="chartdiv_total_{{ año }}" class="chartdiv_total_{{ año }}"></div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+
+    .table-resumen td, .table th {
+        padding: 3px !important;
+        vertical-align: top;
+        border-top: 1px solid #f4f5f8;
+    }
+
+    .table-resumen thead th {
+        text-align: center !important;
+    }
+
+    .table-resumen {
+        margin-top: 20px !important;
+    }
+
+    .table-resumen tbody tr:last-child {
+        background-color: #c6ccff;
+    }
+
+    .form-group {
+        margin-bottom: 0px !important;
+    }
+</style>

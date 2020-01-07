@@ -1,0 +1,19 @@
+{% load static %}
+<form class="m-form m-form--fit m-form--label-align-right" action="/tarificador/tagsUpdate/{{ register.0.ID }}" method="post">
+    {% csrf_token %}
+    <div class="m-portlet__body">
+        <div class="form-group m-form__group">
+            <label for="nombre">Nombre de la etiqueta</label>
+            <input type="text" class="form-control m-input m-input--air m-input--pill" id="nombre" name="nombre" placeholder="Nombre" required value="{{ register.0.NOMBRE }}">
+        </div>
+        <div class="form-group m-form__group">
+            <label for="color">Color</label>
+            <input type="color" class="" id="color" name="color" placeholder="color" required value="{{ register.0.COLOR }}">
+        </div>
+    </div>
+    <div class="m-portlet__foot m-portlet__foot--fit">
+        <div class="m-form__actions">
+            <button type="submit" class="btn btn-brand">Actualizar</button>
+        </div>
+    </div>
+</form>

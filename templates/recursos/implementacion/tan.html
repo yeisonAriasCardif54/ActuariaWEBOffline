@@ -1,0 +1,36 @@
+{% if perms.recursos.recursos_matriz_implementacion %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/recursos/implementacion/tan.js' %}" type="text/javascript"></script>
+    {% csrf_token %}
+    <div class="m-portlet__body">
+        <div class="m-tabs-content" id="m_sections">
+            <div class="m-tabs-content__item m-tabs-content__item--active" id="m_section_0">
+
+                <table id="logHistoryCategory0" class="table" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>CREADOR</th>
+                        <th>FECHA DE CARGUE</th>
+                        <th>DESCARGAR MATRIZ DE CONFIGURACIÓN</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

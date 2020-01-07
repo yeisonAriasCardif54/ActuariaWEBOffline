@@ -1,0 +1,56 @@
+{% load static %}
+<img alt="" src="{% static 'actuaria/logo_cardif_01.png' %}"/>
+{% if perms.profitability.ver_reporte_pgv %}
+    {% if sistema == "Linux" %}
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="m-widget14">
+                    <div class="m-widget14__header">
+                        <h3 class="m-widget14__title">
+                            Espacio en disco para el proyecto.
+                        </h3>
+                        <span class="m-widget14__desc">
+                    Sistema operativo: {{ sistema }}
+                </span>
+                    </div>
+                    <div class="row  align-items-center">
+                        <div class="col">
+                            <div id="m_chart_revenue_change" class="m-widget14__chart1" style="height: 180px"></div>
+                        </div>
+                        <div class="col">
+                            <div class="m-widget14__legends">
+                                <div class="m-widget14__legend">
+                                    <span class="m-widget14__legend-bullet m--bg-accent"></span>
+                                    <span class="m-widget14__legend-text">{{ Ttotal }} Tamaño total</span>
+                                </div>
+                                <div class="m-widget14__legend">
+                                    <span class="m-widget14__legend-bullet m--bg-danger"></span>
+                                    <span class="m-widget14__legend-text">{{ porcenUsado }}% Usado ({{ MegasUsado }})</span>
+                                </div>
+                                <div class="m-widget14__legend">
+                                    <span class="m-widget14__legend-bullet m--bg-brand"></span>
+                                    <span class="m-widget14__legend-text">{{ porcenLibre }}% Libre</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function () {
+                Morris.Donut(
+                    {
+                        element: "m_chart_revenue_change",
+                        data: [
+                            {label: "Usado", value: {{ porcenUsado }}},
+                            {label: "Libre", value: {{ porcenLibre }}}],
+                        colors: [
+                            mApp.getColor("danger"),
+                            mApp.getColor("brand")]
+                    }
+                );
+            });
+        </script>
+    {% endif %}
+{% endif %}

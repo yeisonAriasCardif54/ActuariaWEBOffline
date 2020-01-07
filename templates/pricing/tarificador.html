@@ -1,0 +1,59 @@
+{% if perms.pricing.generar_business_plan %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/pricing/tarificador.js' %}" type="text/javascript"></script>
+    <link href="{% static 'assets/app/css/pricing/tarificador.css' %}" rel="stylesheet" type="text/css"/>
+    <br>
+    <br>
+    <form class="m-form m-form--fit m-form--label-align-right" method="post" enctype="multipart/form-data" action="">
+        <div class="m-portlet__body">
+            {% csrf_token %}
+            {{ form }}
+            <div class="m-section__content">
+                <div class="row">
+                    <div class="col-6">
+                        <form class="m-form m-form--fit m-form--label-align-right">
+                            <div class="m-portlet__body">
+                                <div class="form-group m-form__group row">
+                                    <div class="m-widget5__info">
+                                    <span class="m-widget5__author">
+                                        <a href="/static/pricing/business_plan_templates/Cotizador 201908 v1.4 TEMP - PRUEBA01.xlsx" target="_blank" class="btn btn-outline-warning btn-sm m-btn  m-btn m-btn--icon m-btn--pill">
+                                            <span>
+                                                <i class="fa fa-download"></i>
+                                                <span>Descargar plantilla</span>
+                                            </span>
+                                        </a>
+                                    </span>
+                                    </div>
+                                    <div class="col-9">
+                                        <div class="m-dropzone dropzonev2 m-dropzone--success" action="" id="m-dropzone-threev2">
+                                            <div class="m-dropzone__msg dz-message needsclick">
+                                                <h3 class="m-dropzone__msg-title">Suelte los archivos aquí o haga clic para cargar.</h3>
+                                                <span class="m-dropzone__msg-desc">Recuerde cargar un archivo Excel <i class="fa fa-file-excel" style="color: #20c997; font-size: 21px"></i>, con su respectiva hoja Tarificador.</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="col-6" style="border: 2px dashed #2196f345;padding-top: 15px;" id="divMessages">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

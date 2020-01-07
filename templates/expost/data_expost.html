@@ -1,0 +1,118 @@
+{% if perms.expost.ver_reportes %}
+
+    {% load static %}
+
+    <!-- Styles -->
+    <style media="screen">
+
+        #chartdiv2 {
+            width: 100%;
+            height: 400px;
+        }
+
+        #chartdiv4 {
+            width: 100%;
+            height: 400px;
+        }
+
+    </style>
+
+
+    <!-- HTML TABLE -->
+    <br>
+    <div class="row">
+        <div class="col-xl-4">
+            <!--begin:: Widgets/Blog-->
+            <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
+                <div class="m-portlet__head m-portlet__head--fit">
+                    <div class="m-portlet__head-caption">
+                        <div class="m-portlet__head-title">
+                            <h3 class="m-portlet__head-text m--font-light">
+                                Información Área de Expost
+                            </h3>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="m-portlet__body">
+                    <div class="m-widget28">
+                        <div class="m-widget28__pic m-portlet-fit--sides"></div>
+                        <div class="m-widget28__container">
+                            <!-- begin::Nav pills -->
+                            <ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
+                                <li class="m-widget28__nav-item nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#menu11"><span><i
+                                            class="fa flaticon-diagram"></i></span><span>Data Vigentes</span></a>
+                                </li>
+                                <li class="m-widget28__nav-item nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#menu21"><span><i
+                                            class="fa flaticon-file-1"></i></span><span>Data Expuestos</span></a>
+                                </li>
+                                <li class="m-widget28__nav-item nav-item">
+                                    <a class="nav-link" data-toggle="pill" href="#menu31"><span><i
+                                            class="fa flaticon-line-graph"></i></span><span>Data RRC</span></a>
+                                </li>
+                            </ul>
+                            <!-- end::Nav pills -->
+
+                            <!-- begin::Tab Content -->
+                            <div class="m-widget28__tab tab-content">
+
+                                <div id="menu11" class="m-widget28__tab-container tab-pane active">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="m-widget28__tab-item">
+                                            <span>Total Vigentes Primera Emision :</span>
+                                            <a href="{% url 'export_vige' %}">Exportar Vigentes</a>
+                                        </div>
+                                        <div class="m-widget28__tab-item">
+                                            <span>Total Nuevas Emisiones Mes a Mes :</span>
+                                            <a href="{% url 'export_nuevos' %}">Exportar Nuevos</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="menu21" class="m-widget28__tab-container tab-pane fade">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="m-widget28__tab-item">
+                                            <span>Total Expuestos Mes a Mes :</span>
+                                            <a href="{% url 'export_expu' %}">Exportar Expuestos</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div id="menu31" class="m-widget28__tab-container tab-pane fade">
+                                    <div class="m-widget28__tab-items">
+                                        <div class="m-widget28__tab-item">
+                                            <span>Total RRC (96 Meses) :</span>
+                                            <a href="{% url 'export_rrc' %}">Exportar RRC</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- end::Tab Content -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--end:: Widgets/Blog-->
+
+        </div>
+
+    </div>
+
+
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

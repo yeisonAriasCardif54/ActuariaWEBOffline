@@ -1,0 +1,227 @@
+{% if perms.expost.ver_reportes %}
+
+    {% load static %}
+    <script src="{% static 'assets/app/js/persist_triang.js' %}" type="text/javascript"></script>
+
+    <!-- Resources -->
+
+    <script src="{% static 'assets/app/js/amcharts/amcharts.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/app/js/amcharts/serial.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/app/js/amcharts/min.js' %}" type="text/javascript"></script>
+    <link rel="stylesheet" href="{% static 'assets/app/js/amcharts/export.css' %}" type="text/css" media="all"/>
+    <script src="{% static 'assets/app/js/amcharts/light.js' %}" type="text/javascript"></script>
+    <script src="{% static 'assets/app/js/amcharts/dark.js' %}" type="text/javascript"></script>
+
+    <!-- Styles -->
+    <style media="screen">
+
+        #chartdiv31 {
+
+            width: 100%;
+            height: 400px;
+        }
+
+        #chartdiv32 {
+            width: 100%;
+            height: 400px;
+        }
+
+        #chartdiv33 {
+            width: 100%;
+            height: 400px;
+        }
+
+        #chartdiv34 {
+            width: 100%;
+            height: 400px;
+        }
+
+        #table_a {
+            width: 100%;
+            height: 400px;
+        }
+
+        #table_b {
+            width: 100%;
+            height: 400px;
+        }
+
+        #table_c {
+            width: 100%;
+            height: 400px;
+        }
+
+
+    </style>
+
+
+    <!-- Selects -->
+    <div class="row">
+
+        <div class="col-3">
+
+            <form class="m-form m-form--fit m-form--label-align-right m-demo" action="" method="post">
+                <div class="form-group m-form__group row m-demo__preview block" style="padding-bottom: 10px;">
+                    {% csrf_token %}
+                    {{ form }}
+
+                    <div class="col-lg-12">
+                        <label class="col-lg-12 col-form-label"> Socio: </label>
+                        <select class="form-control m-bootstrap-select m_selectpicker" multiple
+                                data-actions-box="true"
+                                title="Socio(s)" name="socios" id="socios"
+                                onchange="reload_data('socios')">
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label class="col-lg-12 col-form-label">Prod_Financiero:</label>
+                        <select class="form-control m-bootstrap-select m_selectpicker" multiple
+                                data-actions-box="true"
+                                title="Prod_Financiero(s)" name="linea_negocio" id="linea_negocio"
+                                onchange="reload_data('linea_negocio')">
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label class="col-lg-12 col-form-label">Periodicidad:</label>
+                        <select class="form-control m-bootstrap-select m_selectpicker" multiple
+                                data-actions-box="true"
+                                title="Periodo(s)" name="periodo" id="periodo"
+                                onchange="reload_data('periodo')">
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label class="col-lg-12 col-form-label">Canal:</label>
+                        <select class="form-control m-bootstrap-select m_selectpicker" multiple
+                                data-actions-box="true"
+                                title="Canal(es)" name="canal" id="canal"
+                                onchange="reload_data('canal')">
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+
+                    <div class="col-lg-12">
+                        <label class="col-lg-12 col-form-label">Código_Producto:</label>
+                        <select class="form-control m-bootstrap-select m_selectpicker" multiple
+                                data-actions-box="true"
+                                title="Producto(s)" name="productos" id="productos"
+                                onchange="reload_data('productos')">
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+
+                </div>
+            </form>
+        </div>
+
+
+        <!-- HTML GRAPHS -->
+        <div class="col-9">
+            <div class="row">
+                <div class="col-4">
+                    <label class="col-lg-12 col-form-label"><strong><font size="3"> <i> S(t)</i> </font></strong></label>
+                    <div id="chartdiv31" style="width: 100%; background-color: #FFFFFF;"></div>
+                </div>
+
+                <div class="col-4">
+                    <label class="col-lg-12 col-form-label"><strong><font size="3"> <i>Lapse Rate</i>
+                    </font></strong></label>
+                    <div id="chartdiv32" style="width: 100%; background-color: #FFFFFF;"></div>
+                </div>
+
+                <div class="col-4">
+                    <label class="col-lg-12 col-form-label"><strong><font size="3"> <i> Duration</i>
+                    </font></strong></label>
+                    <div id="chartdiv33" style="width: 100%; background-color: #FFFFFF;"></div>
+                </div>
+                <!--
+                <div class="col-4">
+                    <label class="col-lg-12 col-form-label"><strong><font size="3"> <i> Vigentes x Generaciones</i> </font></strong></label>
+                    <div id="chartdiv34" style="width: 100%; background-color: #FFFFFF;"></div>
+                </div>
+                -->
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Tables -->
+    <div class="row">
+
+        <div class="col-3">
+            <div class=" m-section">
+                <div class="m-section__content">
+                    <table class="table m-table m-table--head-bg-brand" id="table_q1">
+                        <thead>
+                        <tr>
+                            <th>ANUAL</th>
+                            <th>Duration</th>
+                            <th>Lapse_rate</th>
+                        </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+        <!--end::Section-->
+
+        <div class="col-9">
+
+            <!--begin::Section-->
+            <div class="m-section">
+                <div class="m-section__content">
+                    <table class="table m-table m-table--head-bg-brand" id="table_q2">
+                        <thead>
+                        <tr>
+                            <th>ANUAL</th>
+                            <th>Inicio</th>
+                            <th>s(3)</th>
+                            <th>s(6)</th>
+                            <th>s(9)</th>
+                            <th>s(12)</th>
+                            <th>s(15)</th>
+                            <th>s(18)</th>
+                            <th>s(21)</th>
+                            <th>s(24)</th>
+                            <th>s(27)</th>
+                            <th>s(30)</th>
+                            <th>s(33)</th>
+                            <th>s(36)</th>
+                        </tr>
+                        </thead>
+                    </table>
+                    <!--end::Form-->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <style>
+        .blockUI{
+            z-index: 1001 !important;
+        }
+    </style>
+
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

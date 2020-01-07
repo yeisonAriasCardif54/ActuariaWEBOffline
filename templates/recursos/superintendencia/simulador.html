@@ -1,0 +1,96 @@
+{% if perms.recursos.informe_superintendencia %}
+    {% load static %}
+    <script src="{% static 'assets/app/js/recursos/superintendencia/simulador.js' %}" type="text/javascript"></script>
+
+    <form class="m-form m-form--fit m-form--label-align-right" action="" method="post">
+        <div class="form-group m-form__group row">
+            {% csrf_token %}
+            {{ form }}
+            <div class="col-6">
+
+                <label class="col-lg-12 col-form-label">Seleccionar la entidad:</label>
+                <div class="col-lg-12">
+                    <select class="form-control" name="socio" id="socio">
+                        {% for socio in socios %}
+                            <option value="{{ socio }}">{{ socio }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <label class="col-lg-12 col-form-label">Seleccionar la linea:</label>
+                <div class="col-lg-12">
+                    <select class="form-control" name="modalidad" id="modalidad">
+                        {% for modalidad in modalidades %}
+                            <option value="{{ modalidad }}">{{ modalidad }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+            </div>
+            <div class="col-3">
+                <label class="col-lg-12 col-form-label">Ingresa el valor del crédito:</label>
+                <div class="col-lg-12">
+                    <input type="number" class="form-control m-input m-input--square" id="valor" name="valor">
+                </div>
+                <label class="col-lg-12 col-form-label">Ingresa el plazo del crédito:</label>
+                <div class="col-lg-12">
+                    <input type="number" class="form-control m-input m-input--square" id="plazo" name="plazo">
+                </div>
+                <label class="col-lg-12 col-form-label">Ingresa la tasa EA:</label>
+                <div class="col-lg-12">
+                    <div class="input-group bootstrap-touchspin">
+                        <span class="input-group-addon bootstrap-touchspin-prefix" style="display: none;"></span>
+                        <input type="number" class="form-control bootstrap-touchspin-vertical-btn" id="tasa" name="tasa">
+                        <span class="input-group-btn">
+                        <button class="btn btn-secondary bootstrap-touchspin-up" type="button">%</button>
+                    </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3">
+                <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-brand alert-dismissible fade show" role="alert">
+                    <div class="m-alert__icon">
+                        <i class="flaticon-exclamation-1"></i>
+                        <span></span>
+                    </div>
+                    <div class="m-alert__text">
+                        <strong>Instrucciones</strong><br>
+                        En caso de no digitarlo, se usará el promedio de la información recuperada de los informes emitidos por la Superintendencia de los últimos 12 meses.
+                    </div>
+                    <div class="m-alert__close">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <br>
+                <button type="button" class="btn btn-warning simular">
+                    <i class="fa fa-calculator"></i>&nbsp;
+                    Simular
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <hr>
+
+
+    <div class="" id="resultado">
+
+    </div>
+{% else %}
+    <div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert">
+        <div class="m-alert__icon">
+            <i class="flaticon-exclamation-1"></i>
+            <span></span>
+        </div>
+        <div class="m-alert__text">
+            <strong>Error!</strong> No Posee los privilegios necesarios para acceder a esta página!
+        </div>
+        <div class="m-alert__close">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            </button>
+        </div>
+    </div>
+{% endif %}

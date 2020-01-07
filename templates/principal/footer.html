@@ -1,0 +1,81 @@
+{% load static %}
+<!-- begin::Footer -->
+<footer class="m-grid__item m-footer ">
+    <div class="m-container m-container--fluid m-container--full-height m-page__container">
+        <div class="m-footer__wrapper">
+            <div class="m-stack m-stack--flex-tablet-and-mobile m-stack--ver m-stack--desktop">
+                <div class="m-stack__item m-stack__item--left m-stack__item--middle m-stack__item--last">
+							<span class="m-footer__copyright">
+								&nbsp;&nbsp;
+							</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- end::Footer -->
+
+<!-- begin::Scroll Top -->
+<div id="m_scroll_top" class="m-scroll-top">
+    <i class="la la-arrow-up"></i>
+</div>
+<!-- end::Scroll Top -->
+
+<!-- begin::Page Loader -->
+<script>
+    $(window).on('load', function () {
+        $('body').removeClass('m-page--loading');
+    });
+</script>
+<!-- end::Page Loader -->
+<style>
+    @media (min-width: 992px) {
+        .modal-lg {
+            max-width: 98% !important;
+        }
+    }
+</style>
+
+<script>
+    var ckbox = $("[name='mas_detalles']");
+    var ckbox_val = $("[name='mas_detalles_val']");
+    var BootstrapSwitch = {
+        init: function () {
+            $("[data-switch=true]").bootstrapSwitch()
+        }
+    };
+    jQuery(document).ready(function () {
+        BootstrapSwitch.init();
+        ckbox.on('switchChange.bootstrapSwitch init.bootstrapSwitch', function (event, state) {
+            if (this.checked) ckbox_val.val('SI');
+            else ckbox_val.val('NO');
+        });
+    });
+
+    $.extend(true, $.fn.dataTable.defaults, {
+        oLanguage: {
+            "sProcessing": "Procesando...",
+            "sLengthMenu": "Mostrar _MENU_ registros",
+            "sZeroRecords": "No se encontraron resultados",
+            "sEmptyTable": "Ningún dato disponible en esta tabla",
+            "sInfo": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+            "sInfoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+            "sInfoFiltered": "(filtrado de un total de _MAX_ registros)",
+            "sInfoPostFix": "",
+            "sSearch": "Buscar:",
+            "sUrl": "",
+            "sInfoThousands": ",",
+            "sLoadingRecords": "Cargando...",
+            "oPaginate": {
+                "sFirst": "Primero",
+                "sLast": "Último",
+                "sNext": "Siguiente",
+                "sPrevious": "Anterior"
+            },
+            "oAria": {
+                "sSortAscending": ": Activar para ordenar la columna de manera ascendente",
+                "sSortDescending": ": Activar para ordenar la columna de manera descendente"
+            }
+        }
+    });
+</script>
