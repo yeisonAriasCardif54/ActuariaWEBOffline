@@ -17,7 +17,7 @@ gym==0.10.9
 idna==2.8
 ift-nifty==1.0.8
 jdcal==1.4
-Jinja2==2.10
+Jinja2==2.11.3
 lml==0.0.9
 lxml==4.3.2
 macholib==1.11
