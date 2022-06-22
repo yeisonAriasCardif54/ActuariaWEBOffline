@@ -24,7 +24,7 @@ macholib==1.11
 Markdown==3.1.1
 MarkupSafe==1.1.0
 natsort==6.0.0
-numpy==1.15.4
+numpy==1.22.0
 openpyxl==2.5.9
 packaging==18.0
 pandas==0.23.4
